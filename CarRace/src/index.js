@@ -3,66 +3,66 @@ const ctx = canvas.getContext("2d");
 
 canvas.style.backgroundColor = "lightgray";
 
-let cocheImagen = new Image();
-cocheImagen.src = "src/coche.png";
+let naveImagen = new Image();
+naveImagen.src = "src/imagenes/spaceship.png";
 
-let obstaculoImagen = new Image();
-obstaculoImagen.src = "src/obstaculo.png";
+let alienImagen = new Image();
+alienImagen.src = "src/imagenes/alien.png";
 
-const obstaculos = [];
+const aliens = [];
 
-const coche = new Objeto(250, 0, 60, 60, cocheImagen, ctx);
+const nave = new Objeto(300, 600, 100, 100, naveImagen, ctx);
 
 const jugar = () => {
-  for (let obstaculo of obstaculos) {
-    obstaculo.borrar();
-    obstaculo.y -= 5;
-    obstaculo.dibujar();
-    if (coche.detectarColision(obstaculo)) {
+  for (let alien of aliens) {
+    alien.borrar();
+    alien.y += 5;
+    alien.dibujar();
+    if (nave.detectarColision(alien)) {
       console.log("Has perdido");
     }
   }
 };
 
-const crearObstaculos = () => {
-  const randomPositionX = Math.floor(Math.random() * 480);
-  const obstaculo = new Objeto(
+const crearAliens = () => {
+  const randomPositionX = Math.floor(Math.random() * 650);
+  const alien = new Objeto(
     randomPositionX,
-    570,
-    120,
-    60,
-    obstaculoImagen,
+    0,
+    50,
+    50,
+    alienImagen,
     ctx
   );
-  obstaculos.push(obstaculo);
+  aliens.push(alien);
 };
 
 const cargaInicial = () => {
-  coche.dibujar();
+  nave.dibujar();
   setInterval(jugar, 200);
-  setInterval(crearObstaculos, 3000);
+  setInterval(crearAliens, 2000);
 };
 
-const moverCoche = (e) => {
-  coche.borrar();
+const moverNave = (e) => {
+  nave.borrar();
   if (e.key === "ArrowLeft") {
-    coche.x -= 5;
+    nave.x -= 10;
   }
   if (e.key === "ArrowRight") {
-    coche.x += 5;
+    nave.x += 10;
   }
   if (e.key === "ArrowUp") {
-    coche.y -= 5;
+    nave.y -= 10;
   }
   if (e.key === "ArrowDown") {
-    coche.y += 5;
+    nave.y += 10;
   }
-  coche.dibujar();
+  nave.dibujar();
 };
 
 window.addEventListener("load", cargaInicial);
 
-window.addEventListener("keydown", moverCoche);
+window.addEventListener("keydown", moverNave);
 
 //Rotar imagen
 //Que vaya a unas coordenadas
